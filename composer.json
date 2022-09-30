@@ -1,0 +1,72 @@
+{
+    "name": "mrethical/http-proxies",
+    "description": "Use http proxies within your Laravel application",
+    "keywords": [
+        "mrethical",
+        "laravel",
+        "http-proxies"
+    ],
+    "homepage": "https://github.com/mrethical/http-proxies",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Jefferson Magboo",
+            "email": "jeffersonmagboo21@gmail.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^8.0.2",
+        "guzzlehttp/guzzle": "^7.5",
+        "illuminate/contracts": "^9.0",
+        "spatie/laravel-package-tools": "^1.13.0"
+    },
+    "require-dev": {
+        "laravel/pint": "^1.0",
+        "nunomaduro/collision": "^6.0",
+        "nunomaduro/larastan": "^2.0.1",
+        "orchestra/testbench": "^7.0",
+        "pestphp/pest": "^1.21",
+        "pestphp/pest-plugin-laravel": "^1.1",
+        "phpstan/extension-installer": "^1.1",
+        "phpstan/phpstan-deprecation-rules": "^1.0",
+        "phpstan/phpstan-phpunit": "^1.0",
+        "phpunit/phpunit": "^9.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "Mrethical\\HttpProxies\\": "src",
+            "Mrethical\\HttpProxies\\Database\\Factories\\": "database/factories"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Mrethical\\HttpProxies\\Tests\\": "tests"
+        }
+    },
+    "scripts": {
+        "analyse": "vendor/bin/phpstan analyse",
+        "test": "vendor/bin/pest",
+        "test-coverage": "vendor/bin/pest --coverage",
+        "format": "vendor/bin/pint"
+    },
+    "config": {
+        "sort-packages": true,
+        "allow-plugins": {
+            "pestphp/pest-plugin": true,
+            "phpstan/extension-installer": true
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Mrethical\\HttpProxies\\HttpProxiesServiceProvider"
+            ],
+            "aliases": {
+                "HttpProxies": "Mrethical\\HttpProxies\\Facades\\HttpProxies"
+            }
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
