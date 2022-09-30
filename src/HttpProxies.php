@@ -19,6 +19,7 @@ class HttpProxies
         }
 
         $config['proxy'] = 'http://'.$proxy->ipPort;
+
         return new GuzzleClient($config);
     }
 }

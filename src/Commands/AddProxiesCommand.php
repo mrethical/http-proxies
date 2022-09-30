@@ -4,7 +4,6 @@ namespace Mrethical\HttpProxies\Commands;
 
 use Exception;
 use Illuminate\Console\Command;
-use Mrethical\HttpProxies\Client;
 use Mrethical\HttpProxies\HttpProxies;
 use Mrethical\HttpProxies\Models\Proxy;
 
@@ -48,9 +47,9 @@ class AddProxiesCommand extends Command
 
         try {
             $response = $client->get('https://google.com');
+
             return $response->getStatusCode() === 200;
-        }
-        catch (Exception) {
+        } catch (Exception) {
             return false;
         }
     }

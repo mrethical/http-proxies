@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * @property string $ip
  * @property int $port
- * @property boolean $is_active
+ * @property bool $is_active
  */
 class Proxy extends Model
 {
