@@ -3,6 +3,7 @@
 namespace Mrethical\HttpProxies;
 
 use Mrethical\HttpProxies\Commands\AddProxiesCommand;
+use Mrethical\HttpProxies\Commands\CheckProxiesCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 
@@ -18,6 +19,9 @@ class HttpProxiesServiceProvider extends PackageServiceProvider
         $package
             ->name('http-proxies')
             ->hasMigration('create_http-proxies_table')
-            ->hasCommand(AddProxiesCommand::class);
+            ->hasCommands(
+                AddProxiesCommand::class,
+                CheckProxiesCommand::class,
+            );
     }
 }

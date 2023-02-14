@@ -2,7 +2,6 @@
 
 namespace Mrethical\HttpProxies\Commands;
 
-use Exception;
 use Illuminate\Console\Command;
 use Mrethical\HttpProxies\HttpProxies;
 use Mrethical\HttpProxies\Models\Proxy;
@@ -30,7 +29,7 @@ class AddProxiesCommand extends Command
             'is_active' => true,
         ];
 
-        if (! $this->isProxyWorking($data)) {
+        if (! app(HttpProxies::class)->ping(new Proxy($data))) {
             $this->error('IP not working');
 
             return self::FAILURE;
@@ -39,18 +38,5 @@ class AddProxiesCommand extends Command
         Proxy::create($data);
 
         return self::SUCCESS;
-    }
-
-    protected function isProxyWorking($data): bool
-    {
-        $client = app(HttpProxies::class)->createClient(new Proxy($data));
-
-        try {
-            $response = $client->get('https://google.com');
-
-            return $response->getStatusCode() === 200;
-        } catch (Exception) {
-            return false;
-        }
     }
 }

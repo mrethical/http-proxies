@@ -2,6 +2,7 @@
 
 namespace Mrethical\HttpProxies;
 
+use Exception;
 use GuzzleHttp\Client as GuzzleClient;
 use Mrethical\HttpProxies\Exceptions\MissingProxyException;
 use Mrethical\HttpProxies\Models\Proxy;
@@ -21,5 +22,18 @@ class HttpProxies
         $config['proxy'] = 'http://'.$proxy->ipPort;
 
         return new GuzzleClient($config);
+    }
+
+    public function ping(Proxy $proxy): bool
+    {
+        $client = $this->createClient($proxy);
+
+        try {
+            $response = $client->get('https://google.com');
+
+            return $response->getStatusCode() === 200;
+        } catch (Exception) {
+            return false;
+        }
     }
 }

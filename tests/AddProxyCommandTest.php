@@ -1,9 +1,5 @@
 <?php
 
-use GuzzleHttp\Client as GuzzleClient;
-use GuzzleHttp\Handler\MockHandler;
-use GuzzleHttp\HandlerStack;
-use GuzzleHttp\Psr7\Response;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Artisan;
 use Mockery\MockInterface;
@@ -16,11 +12,8 @@ beforeEach(function () {
     instance(
         HttpProxies::class,
         Mockery::mock(HttpProxies::class, function (MockInterface $mock) {
-            $guzzleMock = new MockHandler([new Response(200)]);
-            $guzzleClient = new GuzzleClient(['handler' => HandlerStack::create($guzzleMock)]);
-
-            $mock->shouldReceive('createClient')
-                ->andReturn($guzzleClient);
+            $mock->shouldReceive('ping')
+                ->andReturn(true);
         })
     );
 });
@@ -59,11 +52,8 @@ it('fails when proxy is not working', function () {
     instance(
         HttpProxies::class,
         Mockery::mock(HttpProxies::class, function (MockInterface $mock) {
-            $guzzleMock = new MockHandler([new Response(400)]);
-            $guzzleClient = new GuzzleClient(['handler' => HandlerStack::create($guzzleMock)]);
-
-            $mock->shouldReceive('createClient')
-                ->andReturn($guzzleClient);
+            $mock->shouldReceive('ping')
+                ->andReturn(false);
         })
     );
 
