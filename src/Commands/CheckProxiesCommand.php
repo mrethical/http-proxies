@@ -9,7 +9,7 @@ use Mrethical\HttpProxies\Models\Proxy;
 
 class CheckProxiesCommand extends Command
 {
-    public $signature = 'http-proxies:check';
+    public $signature = 'http-proxies:check {--default}';
 
     public $description = 'Check if proxies are still active';
 
@@ -17,8 +17,10 @@ class CheckProxiesCommand extends Command
 
     public function handle(): int
     {
+        $default = $this->option('default');
+
         foreach (Proxy::all() as $proxy) {
-            if (! is_null(static::$checker)) {
+            if (! $default && ! is_null(static::$checker)) {
                 $bool = (static::$checker)($proxy);
                 if (is_bool($bool)) {
                     $proxy->update([

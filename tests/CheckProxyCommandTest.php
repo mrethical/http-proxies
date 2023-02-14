@@ -47,3 +47,24 @@ it('accepts custom ping', function () {
         'is_active' => false,
     ]);
 });
+
+it('ignores custom ping on demand', function () {
+    instance(
+        HttpProxies::class,
+        Mockery::mock(HttpProxies::class, function (MockInterface $mock) {
+            $mock->shouldReceive('ping')
+                ->andReturn(false);
+        })
+    );
+
+    CheckProxiesCommand::setCheckerFunction(fn () => true);
+
+    Artisan::call('http-proxies:check --default');
+
+    assertDatabaseHas('proxies', [
+        'id' => 1,
+        'ip' => '1.2.3.4',
+        'port' => 80,
+        'is_active' => false,
+    ]);
+});
