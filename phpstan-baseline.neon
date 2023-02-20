@@ -1,6 +1,11 @@
 parameters:
 	ignoreErrors:
 		-
+			message: "#^Call to an undefined method Illuminate\\\\Database\\\\Eloquent\\\\Builder\\:\\:isInactive\\(\\)\\.$#"
+			count: 1
+			path: src/Commands/PruneProxiesCommand.php
+
+		-
 			message: "#^Call to an undefined method Illuminate\\\\Database\\\\Eloquent\\\\Builder\\:\\:isActive\\(\\)\\.$#"
 			count: 1
 			path: src/HttpProxies.php

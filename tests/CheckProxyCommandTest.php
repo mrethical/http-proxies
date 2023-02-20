@@ -48,7 +48,8 @@ it('accepts custom ping', function () {
         'port' => 80,
         'is_active' => false,
     ]);
-});
+})
+    ->depends('it marks proxy as inactive when ping fails');
 
 it('ignores custom ping on demand', function () {
     partialMock(
@@ -71,4 +72,5 @@ it('ignores custom ping on demand', function () {
         'port' => 80,
         'is_active' => false,
     ]);
-});
+})
+    ->depends('it marks proxy as inactive when ping fails');

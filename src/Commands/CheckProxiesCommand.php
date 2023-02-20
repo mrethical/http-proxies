@@ -18,21 +18,17 @@ class CheckProxiesCommand extends Command
     {
         $default = $this->option('default');
 
-        dump('pass');
         foreach (app(HttpProxies::class)->query()->get() as $proxy) {
+            /** @var \Mrethical\HttpProxies\Models\Proxy $proxy */
             if (! $default && ! is_null(static::$checker)) {
                 $bool = (static::$checker)($proxy);
                 if (is_bool($bool)) {
-                    $proxy->update([
-                        'is_active' => $bool,
-                    ]);
+                    $proxy->is_active = $bool;
                 }
             } else {
-                $proxy->update([
-                    'is_active' => app(HttpProxies::class)->ping($proxy),
-                ]);
-                $proxy->fresh();
+                $proxy->is_active = app(HttpProxies::class)->ping($proxy);
             }
+            $proxy->save();
         }
 
         return self::SUCCESS;
