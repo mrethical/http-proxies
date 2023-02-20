@@ -4,15 +4,33 @@ namespace Mrethical\HttpProxies;
 
 use Exception;
 use GuzzleHttp\Client as GuzzleClient;
+use Illuminate\Database\Eloquent\Builder;
 use Mrethical\HttpProxies\Exceptions\MissingProxyException;
 use Mrethical\HttpProxies\Models\Proxy;
 
 class HttpProxies
 {
+    public function __construct(protected Proxy $model)
+    {
+    }
+
+    public function getModel(): Proxy
+    {
+        return $this->model;
+    }
+
+    public function query(): Builder
+    {
+        return $this->getModel()->newQuery();
+    }
+
     public function createClient(Proxy $proxy = null, $config = []): GuzzleClient
     {
         if (is_null($proxy)) {
-            $proxy = Proxy::isActive()->inRandomOrder()->first();
+            $proxy = $this->query()
+                ->isActive()
+                ->inRandomOrder()
+                ->first();
         }
 
         if (is_null($proxy)) {

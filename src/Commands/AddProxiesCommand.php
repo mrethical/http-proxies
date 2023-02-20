@@ -4,7 +4,6 @@ namespace Mrethical\HttpProxies\Commands;
 
 use Illuminate\Console\Command;
 use Mrethical\HttpProxies\HttpProxies;
-use Mrethical\HttpProxies\Models\Proxy;
 
 class AddProxiesCommand extends Command
 {
@@ -17,7 +16,7 @@ class AddProxiesCommand extends Command
         $ip = $this->argument('ip');
         $port = intval($this->option('port')) ?: 80;
 
-        if (Proxy::where('ip', $ip)->exists()) {
+        if (app(HttpProxies::class)->query()->where('ip', $ip)->exists()) {
             $this->error('IP already exists');
 
             return self::FAILURE;
@@ -29,13 +28,13 @@ class AddProxiesCommand extends Command
             'is_active' => true,
         ];
 
-        if (! app(HttpProxies::class)->ping(new Proxy($data))) {
+        if (! app(HttpProxies::class)->ping(new (get_class(app(HttpProxies::class)->getModel()))($data))) {
             $this->error('IP not working');
 
             return self::FAILURE;
         }
 
-        Proxy::create($data);
+        app(HttpProxies::class)->query()->create($data);
 
         return self::SUCCESS;
     }

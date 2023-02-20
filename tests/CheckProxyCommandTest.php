@@ -6,7 +6,7 @@ use Mrethical\HttpProxies\Commands\CheckProxiesCommand;
 use Mrethical\HttpProxies\HttpProxies;
 use Mrethical\HttpProxies\Models\Proxy;
 use function Pest\Laravel\assertDatabaseHas;
-use function Pest\Laravel\instance;
+use function Pest\Laravel\partialMock;
 
 beforeEach(function () {
     Proxy::create([
@@ -17,12 +17,14 @@ beforeEach(function () {
 });
 
 it('marks proxy as inactive when ping fails', function () {
-    instance(
+    partialMock(
         HttpProxies::class,
-        Mockery::mock(HttpProxies::class, function (MockInterface $mock) {
+        function (MockInterface $mock) {
+            $mock->shouldReceive('getModel')
+                ->andReturn(new Proxy());
             $mock->shouldReceive('ping')
                 ->andReturn(false);
-        })
+        }
     );
 
     Artisan::call('http-proxies:check');
@@ -49,12 +51,14 @@ it('accepts custom ping', function () {
 });
 
 it('ignores custom ping on demand', function () {
-    instance(
+    partialMock(
         HttpProxies::class,
-        Mockery::mock(HttpProxies::class, function (MockInterface $mock) {
+        function (MockInterface $mock) {
+            $mock->shouldReceive('getModel')
+                ->andReturn(new Proxy());
             $mock->shouldReceive('ping')
                 ->andReturn(false);
-        })
+        }
     );
 
     CheckProxiesCommand::setCheckerFunction(fn () => true);

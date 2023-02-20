@@ -5,7 +5,6 @@ namespace Mrethical\HttpProxies\Commands;
 use Closure;
 use Illuminate\Console\Command;
 use Mrethical\HttpProxies\HttpProxies;
-use Mrethical\HttpProxies\Models\Proxy;
 
 class CheckProxiesCommand extends Command
 {
@@ -19,7 +18,8 @@ class CheckProxiesCommand extends Command
     {
         $default = $this->option('default');
 
-        foreach (Proxy::all() as $proxy) {
+        dump('pass');
+        foreach (app(HttpProxies::class)->query()->get() as $proxy) {
             if (! $default && ! is_null(static::$checker)) {
                 $bool = (static::$checker)($proxy);
                 if (is_bool($bool)) {
@@ -31,6 +31,7 @@ class CheckProxiesCommand extends Command
                 $proxy->update([
                     'is_active' => app(HttpProxies::class)->ping($proxy),
                 ]);
+                $proxy->fresh();
             }
         }
 

@@ -4,17 +4,20 @@ use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Artisan;
 use Mockery\MockInterface;
 use Mrethical\HttpProxies\HttpProxies;
+use Mrethical\HttpProxies\Models\Proxy;
 use function Pest\Laravel\assertDatabaseHas;
-use function Pest\Laravel\instance;
+use function Pest\Laravel\partialMock;
 use function PHPUnit\Framework\assertEquals;
 
 beforeEach(function () {
-    instance(
+    partialMock(
         HttpProxies::class,
-        Mockery::mock(HttpProxies::class, function (MockInterface $mock) {
+        function (MockInterface $mock) {
+            $mock->shouldReceive('getModel')
+                ->andReturn(new Proxy());
             $mock->shouldReceive('ping')
                 ->andReturn(true);
-        })
+        }
     );
 });
 
@@ -49,12 +52,14 @@ it('fails when proxy already exists', function () {
 });
 
 it('fails when proxy is not working', function () {
-    instance(
+    partialMock(
         HttpProxies::class,
-        Mockery::mock(HttpProxies::class, function (MockInterface $mock) {
+        function (MockInterface $mock) {
+            $mock->shouldReceive('getModel')
+                ->andReturn(new Proxy());
             $mock->shouldReceive('ping')
                 ->andReturn(false);
-        })
+        }
     );
 
     $statusCode = Artisan::call('http-proxies:add', [

@@ -1,7 +1,7 @@
 <?php
 
 use Mrethical\HttpProxies\Exceptions\MissingProxyException;
-use Mrethical\HttpProxies\HttpProxies;
+use Mrethical\HttpProxies\Facades\HttpProxies;
 use Mrethical\HttpProxies\Models\Proxy;
 
 beforeEach(function () {
@@ -15,6 +15,5 @@ beforeEach(function () {
 it('fails when there are no active ips', function () {
     Proxy::query()->update(['is_active' => false]);
 
-    $httpProxies = new HttpProxies();
-    $httpProxies->createClient();
+    HttpProxies::createClient();
 })->throws(MissingProxyException::class);
