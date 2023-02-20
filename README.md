@@ -21,7 +21,19 @@ You can publish and run the migrations with:
 php artisan vendor:publish --tag="http-proxies-migrations"
 php artisan migrate
 ```
+You can publish the config file with:
 
+```bash
+php artisan vendor:publish --tag="http-proxies-config"
+```
+
+This is the contents of the published config file:
+
+```php
+return [
+    'model' => Mrethical\HttpProxies\Models\Proxy::class,
+];
+```
 ## Usage
 
 Add a proxy by calling the `http-proxies:add` command
