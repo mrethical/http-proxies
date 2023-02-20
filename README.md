@@ -5,7 +5,7 @@
 [![GitHub Code Style Action Status](https://img.shields.io/github/actions\workflow/status/mrethical/http-proxies/fix-php-code-style-issues.yml?branch=main&label=code%20style&style=flat-square)](https://github.com/mrethical/http-proxies/actions?query=workflow%3A"Fix+PHP+code+style+issues"+branch%3Amain)
 [![Total Downloads](https://img.shields.io/packagist/dt/mrethical/http-proxies.svg?style=flat-square)](https://packagist.org/packages/mrethical/http-proxies)
 
-This package help you set up a simple ip proxies management. It can also give you a GuzzleClient with a fresh active proxy set.
+This package help you set up a simple ip proxies management. It can also give you a GuzzleClient with a fresh active proxy configured.
 
 ## Installation
 
@@ -45,7 +45,9 @@ php artisan http-proxies:add 1.2.3.4 --port=80
 On your code, get a GuzzleClient with a fresh active proxy.
 
 ```php
-$client = app(\Mrethical\HttpProxies\Client::class);
+use Mrethical\HttpProxies\HttpProxies;
+
+$client = app(HttpProxies::class)->createClient();
 ```
 
 ## Testing
