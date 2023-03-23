@@ -40,4 +40,25 @@ class Proxy extends Model
     {
         return $this->ip.':'.$this->port;
     }
+
+    public function markAsActive()
+    {
+        $this->update([
+            'is_active' => true,
+        ]);
+    }
+
+    public function markAsInactive()
+    {
+        $this->update([
+            'is_active' => false,
+        ]);
+    }
+
+    public static function firstRandomActive()
+    {
+        return self::isActive()
+            ->inRandomOrder()
+            ->first();
+    }
 }
