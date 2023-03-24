@@ -2,6 +2,15 @@
 
 All notable changes to `http-proxies` will be documented in this file.
 
+## v1.2.0 - 2023-03-24
+
+### What's Changed
+
+- Add functions to model ([4940ee9](https://github.com/mrethical/http-proxies/commit/4940ee97ea774f918320fd181deeb94efa57ca21))
+- Add webdriver client ([c201d93](https://github.com/mrethical/http-proxies/commit/c201d93afb9a32afa5617977467dbd0f083ec347))
+
+**Full Changelog:** https://github.com/mrethical/http-proxies/compare/v1.2.0...v1.1.0
+
 ## v1.1.0 - 2023-02-20
 
 ### What's Changed
