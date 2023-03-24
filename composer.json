@@ -28,6 +28,7 @@
         "orchestra/testbench": "^8.0|^7.0|^6.23",
         "pestphp/pest": "^1.21",
         "pestphp/pest-plugin-laravel": "^1.1",
+        "php-webdriver/webdriver": "^1.14",
         "phpstan/extension-installer": "^1.1",
         "phpstan/phpstan-deprecation-rules": "^1.0",
         "phpstan/phpstan-phpunit": "^1.0",
@@ -49,6 +50,9 @@
         "test": "vendor/bin/pest",
         "test-coverage": "vendor/bin/pest --coverage",
         "format": "vendor/bin/pint"
+    },
+    "suggest": {
+        "php-webdriver/webdriver": "Required to used proxy ready webdrivers"
     },
     "config": {
         "sort-packages": true,
