@@ -32,15 +32,22 @@ class ChromeDriver
             $desiredCapabilities->setCapability($key, $capability);
         }
 
-        $timeout = 150;
         $driver = RemoteWebDriver::create(
             config('http-proxies.selenium.url'),
             $desiredCapabilities,
-            null,
-            $timeout * 1000,
+            transform(config('http-proxies.selenium.timeouts.connection'), fn ($timeout) => $timeout * 1000),
+            transform(config('http-proxies.selenium.timeouts.request'), fn ($timeout) => $timeout * 1000),
         );
         $driver->manage()->deleteAllCookies();
-        $driver->manage()->timeouts()->setScriptTimeout($timeout);
+        $timeouts = $driver->manage()->timeouts();
+        $pageLoadTimeout = config('http-proxies.selenium.timeouts.pageload');
+        if (! is_null($pageLoadTimeout)) {
+            $timeouts->pageLoadTimeout($pageLoadTimeout);
+        }
+        $scriptTimeout = config('http-proxies.selenium.timeouts.script');
+        if (! is_null($scriptTimeout)) {
+            $timeouts->setScriptTimeout($scriptTimeout);
+        }
 
         return $driver;
     }
