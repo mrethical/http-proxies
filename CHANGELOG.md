@@ -2,6 +2,14 @@
 
 All notable changes to `http-proxies` will be documented in this file.
 
+## v1.3.1 - 2023-04-24
+
+### What's Changed
+
+- Set default pageload and script timeout ([f4cc497](https://github.com/mrethical/http-proxies/commit/f4cc4970cb52a3d4d83954be147f886299088826))
+
+**Full Changelog:** https://github.com/mrethical/http-proxies/compare/v1.3.1...v1.3.0
+
 ## v1.3.0 - 2023-04-24
 
 ### What's Changed
