@@ -39,15 +39,9 @@ class ChromeDriver
             transform(config('http-proxies.selenium.timeouts.request'), fn ($timeout) => $timeout * 1000),
         );
         $driver->manage()->deleteAllCookies();
-        $timeouts = $driver->manage()->timeouts();
-        $pageLoadTimeout = config('http-proxies.selenium.timeouts.pageload');
-        if (! is_null($pageLoadTimeout)) {
-            $timeouts->pageLoadTimeout($pageLoadTimeout);
-        }
-        $scriptTimeout = config('http-proxies.selenium.timeouts.script');
-        if (! is_null($scriptTimeout)) {
-            $timeouts->setScriptTimeout($scriptTimeout);
-        }
+        $driver->manage()->timeouts()
+            ->pageLoadTimeout(config('http-proxies.selenium.timeouts.pageload'))
+            ->setScriptTimeout(config('http-proxies.selenium.timeouts.script'));
 
         return $driver;
     }

@@ -37,8 +37,8 @@ return [
         'timeouts' => [
             'connection' => env('SELENIUM_CONNECTION_TIMEOUT'),
             'request' => env('SELENIUM_REQUEST_TIMEOUT'),
-            'pageload' => env('SELENIUM_PAGELOAD_TIMEOUT'),
-            'script' => env('SELENIUM_SCRIPT_TIMEOUT'),
+            'pageload' => env('SELENIUM_PAGELOAD_TIMEOUT', 60),
+            'script' => env('SELENIUM_SCRIPT_TIMEOUT', 3),
         ],
     ],
 ];
