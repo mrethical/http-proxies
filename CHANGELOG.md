@@ -2,6 +2,14 @@
 
 All notable changes to `http-proxies` will be documented in this file.
 
+## v1.3.0 - 2023-04-24
+
+### What's Changed
+
+- Make timeouts configurable ([d42b980](https://github.com/mrethical/http-proxies/commit/d42b980452ec7d3f1a167babb0e29e55c6a2db20))
+
+**Full Changelog:** https://github.com/mrethical/http-proxies/compare/v1.3.0...v1.2.0
+
 ## v1.2.0 - 2023-03-24
 
 ### What's Changed
